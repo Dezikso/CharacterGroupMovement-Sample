@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public Action<Vector2> onPress;
+    public static Action<Vector2> OnPress;
 
     private UserInputActions userInput;
     private Vector2 screenPosition;
@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour
     {
         if (screenPosition != null)
         {
-            onPress.Invoke(screenPosition);
+            OnPress?.Invoke(screenPosition);
         }
     }
 
