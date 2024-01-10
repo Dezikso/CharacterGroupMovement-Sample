@@ -15,11 +15,14 @@ public class InputManager : MonoBehaviour
         userInput = new UserInputActions();
         userInput.Enable();
         
+    }
+
+    private void OnEnable()
+    {
         userInput.Player.ScreenPosition.performed += UpdateScreenPosition;
         userInput.Player.Press.performed += HandlePress;
     }
-
-    private void OnDestroy()
+    private void OnDisable()
     {
         userInput.Player.Press.performed -= HandlePress;
         userInput.Player.ScreenPosition.performed -= UpdateScreenPosition;

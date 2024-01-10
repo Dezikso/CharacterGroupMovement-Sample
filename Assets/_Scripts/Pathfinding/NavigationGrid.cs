@@ -40,7 +40,7 @@ public class NavigationGrid : MonoBehaviour
                     + Vector3.forward * (y * nodeDiameter + nodeRadius);
                 bool isWalkable = !Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask);
 
-                grid[x,y] = new Node(isWalkable, worldPoint, x, y);
+                grid[x,y] = new Node(isWalkable, x, y, worldPoint);
             }
         }
 

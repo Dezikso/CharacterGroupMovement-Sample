@@ -17,12 +17,14 @@ public class Pathfinding : MonoBehaviour
     private void Awake()
     {
         grid = GetComponent<NavigationGrid>();
+    }
 
+    private void OnEnable()
+    {
         //UnitManager.OnLeaderChanged += SetSeeker;
         InputManager.OnPress += SetTargetToScreenPoint;
     }
-
-    private void OnDestroy()
+    private void OnDisable()
     {
         //UnitManager.OnLeaderChanged -= SetSeeker;
         InputManager.OnPress -= SetTargetToScreenPoint;
