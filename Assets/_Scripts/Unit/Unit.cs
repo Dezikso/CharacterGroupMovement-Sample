@@ -10,6 +10,8 @@ public class Unit : MonoBehaviour
     private UnitStats stats;
     private Coroutine activeMoveCoroutine;
 
+    public int UnitID { get { return unitID; } }
+    public float MoveSpeed { get { return stats.speed; } }
 
     private void Awake()
     {
@@ -17,17 +19,17 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void Move(List<Node> path)
+    public void Move(List<Node> path, float moveSpeed)
     {
         if (activeMoveCoroutine != null)
         {
             StopCoroutine(activeMoveCoroutine);
         }
 
-        activeMoveCoroutine = StartCoroutine(MoveCoroutine(path));
+        activeMoveCoroutine = StartCoroutine(MoveCoroutine(path, moveSpeed));
     }
 
-    private IEnumerator MoveCoroutine(List<Node> path)
+    private IEnumerator MoveCoroutine(List<Node> path, float moveSpeed)
     {
         foreach (Node node in path)
         {
@@ -39,7 +41,7 @@ public class Unit : MonoBehaviour
 
             while (moveProgress < 1)
             {
-                moveProgress += Time.deltaTime * stats.speed;
+                moveProgress += Time.deltaTime * moveSpeed;
                 transform.position = Vector3.Lerp(startPosition, targetPosition, moveProgress);
                 yield return new WaitForEndOfFrame();
             }
