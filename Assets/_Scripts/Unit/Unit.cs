@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int unitID;
 
     private UnitStats stats;
+    private Coroutine activeMoveCoroutine;
 
 
     private void Awake()
@@ -18,10 +19,15 @@ public class Unit : MonoBehaviour
 
     public void Move(List<Node> path)
     {
-        StartCoroutine(MoveCooroutine(path));
+        if (activeMoveCoroutine != null)
+        {
+            StopCoroutine(activeMoveCoroutine);
+        }
+
+        activeMoveCoroutine = StartCoroutine(MoveCoroutine(path));
     }
 
-    private IEnumerator MoveCooroutine(List<Node> path)
+    private IEnumerator MoveCoroutine(List<Node> path)
     {
         foreach (Node node in path)
         {
@@ -38,6 +44,8 @@ public class Unit : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
+
+        activeMoveCoroutine = null;
     }
 
 }
