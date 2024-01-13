@@ -1,32 +1,54 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class UnitManager : MonoBehaviour
 {
+    public static Action<Unit> OnLeaderChanged;
+
+    [SerializeField] private int defaultLeaderIndex = 0;
     [SerializeField] private List<Unit> units;
     [SerializeField] private int unitSpacing = 2;
     [SerializeField] private float unitMoveDelay = 0.5f;
 
-    [SerializeField] private int leaderIndex; //make private later
+    private int leaderIndex;
     private Coroutine activeMoveUnitsCoroutine;
 
 
 
     private void OnEnable()
     {
+        UIManager.OnLeaderSet += SetLeader;
         Pathfinding.OnPathFound += MoveUnits;
     }
     private void OnDisable()
     {
+        UIManager.OnLeaderSet -= SetLeader;
         Pathfinding.OnPathFound -= MoveUnits;
     }
 
     private void Start()
     {
-        leaderIndex = 0;
+        SetLeader(defaultLeaderIndex);
     }
 
+
+    private void SetLeader(int leaderID)
+    {
+        leaderIndex = leaderID;
+        SetLeaderIndicator();
+        OnLeaderChanged?.Invoke(units[leaderIndex]);
+    }
+
+    private void SetLeaderIndicator()
+    {
+        foreach (Unit unit in units) 
+        {
+            unit.SetLeaderIndicator(false);
+        }
+        units[leaderIndex].SetLeaderIndicator(true);
+    }
 
     private void MoveUnits(List<Node> path)
     {
@@ -67,5 +89,6 @@ public class UnitManager : MonoBehaviour
 
         activeMoveUnitsCoroutine = null;
     }
+
 
 }

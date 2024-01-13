@@ -6,6 +6,7 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] private UnitStatsRangesSO statsRanges;
     [SerializeField] private int unitID;
+    [SerializeField] private GameObject leaderIndicator;
 
     private UnitStats stats;
     private Coroutine activeMoveCoroutine;
@@ -18,6 +19,11 @@ public class Unit : MonoBehaviour
         stats = new UnitStats(statsRanges);
     }
 
+
+    public void SetLeaderIndicator(bool isLeader)
+    {
+        leaderIndicator.SetActive(isLeader);
+    }
 
     public void Move(List<Node> path, float moveSpeed)
     {

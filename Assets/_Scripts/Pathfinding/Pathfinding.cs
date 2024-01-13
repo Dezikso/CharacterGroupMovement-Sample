@@ -21,18 +21,18 @@ public class Pathfinding : MonoBehaviour
 
     private void OnEnable()
     {
-        //UnitManager.OnLeaderChanged += SetSeeker;
+        UnitManager.OnLeaderChanged += SetSeeker;
         InputManager.OnPress += SetTargetToScreenPoint;
     }
     private void OnDisable()
     {
-        //UnitManager.OnLeaderChanged -= SetSeeker;
+        UnitManager.OnLeaderChanged -= SetSeeker;
         InputManager.OnPress -= SetTargetToScreenPoint;
     }
 
-    private void SetSeeker(Transform leader)
+    private void SetSeeker(Unit leader)
     {
-        seeker = leader;
+        seeker = leader.transform;
     }
 
     private void SetTargetToScreenPoint(Vector2 screenPosition)
