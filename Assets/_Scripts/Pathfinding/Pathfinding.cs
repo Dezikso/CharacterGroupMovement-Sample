@@ -8,10 +8,10 @@ public class Pathfinding : MonoBehaviour
 {
     public static Action<List<Node>> OnPathFound;
 
-    [SerializeField] private Transform seeker; //change to private later
     [SerializeField] private LayerMask walkableMask;
 
     private NavigationGrid grid;
+    private Transform seeker;
 
 
     private void Awake()
