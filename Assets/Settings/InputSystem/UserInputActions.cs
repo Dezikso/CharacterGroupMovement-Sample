@@ -61,7 +61,7 @@ public partial class @UserInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""81cf4671-3058-4c8b-bf6e-9217909d5869"",
-                    ""path"": ""<Mouse>/press"",
+                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
