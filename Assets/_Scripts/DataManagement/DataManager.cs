@@ -23,6 +23,18 @@ public class DataManager : MonoBehaviour
         instance = this;
     }
 
+    private void OnEnable()
+    {
+        UIManager.OnLoadClicked += LoadData;
+        UIManager.OnSaveClicked += SaveData;
+    }
+
+    private void OnDisable()
+    {
+        UIManager.OnLoadClicked -= LoadData;
+        UIManager.OnSaveClicked -= SaveData;
+    }
+
     private void Start()
     {
         gameData = new GameData();
@@ -31,7 +43,7 @@ public class DataManager : MonoBehaviour
     }
 
 
-    public void LoadData()
+    private void LoadData()
     {
         gameData = fileDataHandler.Load();
 
@@ -46,7 +58,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void SaveData()
+    private void SaveData()
     {
         foreach (IDataHandler handler in dataHandlers)
         {

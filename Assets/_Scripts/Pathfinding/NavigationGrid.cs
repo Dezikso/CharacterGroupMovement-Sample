@@ -19,6 +19,20 @@ public class NavigationGrid : MonoBehaviour
         CreateGrid();
     }
 
+
+    public Node GetNodeFromWorldPoint(Vector3 worldPoint)
+    {
+        Vector3 localPosition = worldPoint - transform.position;
+
+        float percentX = Mathf.Clamp01(localPosition.x / gridWorldSize.x + 0.5f);
+        float percentY = Mathf.Clamp01(localPosition.z / gridWorldSize.y + 0.5f);
+
+        int x = Mathf.Clamp(Mathf.FloorToInt(percentX * gridSizeX), 0, gridSizeX - 1);
+        int y = Mathf.Clamp(Mathf.FloorToInt(percentY * gridSizeY), 0, gridSizeY - 1);
+
+        return grid[x, y];
+    }
+
     private void InitializeGridValues()
     {
         nodeDiameter = nodeRadius * 2;
@@ -86,18 +100,6 @@ public class NavigationGrid : MonoBehaviour
         return x >= 0 && x < gridSizeX && y >=0 && y < gridSizeY;
     }
 
-    public Node GetNodeFromWorldPoint(Vector3 worldPoint)
-    {
-        Vector3 localPosition = worldPoint - transform.position;
-
-        float percentX = Mathf.Clamp01(localPosition.x / gridWorldSize.x + 0.5f);
-        float percentY = Mathf.Clamp01(localPosition.z / gridWorldSize.y + 0.5f);
-
-        int x = Mathf.Clamp(Mathf.FloorToInt(percentX * gridSizeX), 0, gridSizeX - 1);
-        int y = Mathf.Clamp(Mathf.FloorToInt(percentY * gridSizeY), 0, gridSizeY - 1);
-
-        return grid[x, y];
-    }
 
     #region Editor Visualization
     private List<Node> path;

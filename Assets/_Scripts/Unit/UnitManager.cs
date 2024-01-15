@@ -16,7 +16,6 @@ public class UnitManager : MonoBehaviour, IDataHandler
     private Coroutine activeMoveUnitsCoroutine;
 
 
-
     private void OnEnable()
     {
         UIManager.OnLeaderSet += SetLeader;

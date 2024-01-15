@@ -17,6 +17,16 @@ public class ThemeManager : MonoBehaviour, IDataHandler
     private AsyncOperationHandle<GameObject> obstaclesHandle;
 
 
+    private void OnEnable()
+    {
+        UIManager.OnThemeSet += ChangeTheme;
+    }
+
+    private void OnDisable()
+    {
+        UIManager.OnThemeSet -= ChangeTheme;
+    }
+
     private void Start()
     {
         ChangeTheme(0);
@@ -36,7 +46,7 @@ public class ThemeManager : MonoBehaviour, IDataHandler
     }
 
 
-    public void ChangeTheme(int themeIndex)
+    private void ChangeTheme(int themeIndex)
     {
         if (themeIndex < 0 || themeIndex >= themes.Count || themeIndex == activeThemeIndex)
             return;
