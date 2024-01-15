@@ -7,6 +7,8 @@ public class UnitStats
     public float speed;
     public float agility;
 
+    public Vector3 position;
+
 
     public UnitStats(UnitStatsRangesSO statsRanges)
     {

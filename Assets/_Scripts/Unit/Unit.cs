@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    [SerializeField] private string unitID;
     [SerializeField] private UnitStatsRangesSO statsRanges;
-    [SerializeField] private int unitID;
     [SerializeField] private GameObject leaderIndicator;
 
     private UnitStats stats;
     private Coroutine activeMoveCoroutine;
 
-    public int UnitID { get { return unitID; } }
-    public float MoveSpeed { get { return stats.speed; } }
+    public string UnitID { get { return unitID; } }
+    public UnitStats Stats 
+    { 
+        get 
+        {
+            stats.position = this.transform.position;
+            return stats; 
+        }
+        set
+        {
+            stats = value;
+            this.transform.position = stats.position;
+        }
+    }
 
     private void Awake()
     {
@@ -23,6 +35,14 @@ public class Unit : MonoBehaviour
     public void SetLeaderIndicator(bool isLeader)
     {
         leaderIndicator.SetActive(isLeader);
+    }
+
+    public void StopMovement()
+    {
+        if (activeMoveCoroutine != null)
+        {
+            StopCoroutine(activeMoveCoroutine);
+        }
     }
 
     public void Move(List<Node> path, float moveSpeed)

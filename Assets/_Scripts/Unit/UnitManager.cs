@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitManager : MonoBehaviour
+public class UnitManager : MonoBehaviour, IDataHandler
 {
     public static Action<Unit> OnLeaderChanged;
 
@@ -31,6 +31,34 @@ public class UnitManager : MonoBehaviour
     private void Start()
     {
         SetLeader(defaultLeaderIndex);
+    }
+
+    public void LoadData(GameData data)
+    {
+        foreach (Unit unit in units)
+        {
+            unit.StopMovement();
+
+            if (data.units.ContainsKey(unit.UnitID))
+            {
+                unit.Stats = data.units[unit.UnitID];
+            }
+        }
+
+        SetLeader(data.leaderID);
+    }    
+
+    public void SaveData(GameData data)
+    {
+        foreach(Unit unit in units)
+        {
+            if (data.units.ContainsKey(unit.UnitID))
+            {
+                data.units.Remove(unit.UnitID);
+            }
+            data.units.Add(unit.UnitID, unit.Stats);
+            data.leaderID = leaderIndex;
+        }
     }
 
 
@@ -68,7 +96,7 @@ public class UnitManager : MonoBehaviour
         }
 
         Unit leader = units[leaderIndex];
-        leader.Move(new List<Node>(path), leader.MoveSpeed);
+        leader.Move(new List<Node>(path), leader.Stats.speed);
 
         yield return new WaitForSeconds(unitMoveDelay);
 
@@ -82,7 +110,7 @@ public class UnitManager : MonoBehaviour
                 path.RemoveRange(path.Count - unitSpacing, unitSpacing);
             }
             
-            units[i].Move(new List<Node>(path), leader.MoveSpeed);
+            units[i].Move(new List<Node>(path), leader.Stats.speed);
 
             yield return new WaitForSeconds(unitMoveDelay);
         }
